@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VUE JSON</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+</head>
+<body>
+    <div id="app">
+        <input type="file" @change="onFileChange">
+        <p>읽어들인 데이터 {{loadData}}</p>
+    </div>    
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                loadData : ''
+            },
+            methods:{
+                onFileChange : function(e){
+                    var file = e.target.files[0];
+                    if (file){
+                        var render = new FileReader();
+                        var vm = this;
+                        render.onload = function(e){
+                            var json = JSON.parse(e.target.result);
+                            vm.loadData = json;
+                        }
+                        render.readAsText(file);
+                    }
+                }
+            }
+        })
+    </script>
+</body>
+</html>

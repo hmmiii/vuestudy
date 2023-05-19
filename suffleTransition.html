@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>셔플 트렌지션</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
+    <style>
+        .v-move{
+            transition: 0.5s;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <h2>클릭하면 셔플하는 예제</h2>
+        <button @click="suffleData">셔플!</button>
+        <transition-group tag="ul">
+            <li v-for="item in dataArr" :key="item">{{item}}</li>
+        </transition-group>
+    </div>
+    <script>
+
+        new Vue({
+            el:'#app',
+            data:{
+                dataArr : ['one','two','three','four','five']
+            },
+            methods:{
+                suffleData:function(){
+                    var buffer = [];
+                    var len = this.dataArr.length;
+                    for(var i = len; len>0; len--){
+                        var r = Math.floor(Math.random() * len);
+                        buffer.push(this.dataArr[r]);
+                        this.dataArr.splice(r,1);
+                    }
+                    this.dataArr = buffer;
+                }
+            }
+        })
+    </script>    
+</body>
+</html>

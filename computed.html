@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>컴퓨티드</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        가격 <input type="number" v-model.number="price" step="1000">
+        <br>
+        개수 <input type="number" v-model.number="count">
+        <p>금액 : {{sum}}원</p>
+        <p>소비세 포함 금액 : {{taxIncluded}}원</p>
+        <p>감상은 140자 이내로 작성해주세요.</p>
+        <textarea v-model="myText" cols="30" rows="10" :style="{color:computedColor}"></textarea>
+        <p>남은 글자수 : {{remaining}}</p>
+    </div>    
+    <script>
+        new Vue({
+            el:'#app',
+            data:{
+                price:1000,
+                count:1,
+                remain:140,
+                myText:'',
+            },
+            computed:{
+                taxIncluded : function(){
+                    return this.sum * 1.08;
+                },
+                sum:function(){
+                    return this.price * this.count;
+                },
+                remaining : function(){
+                    return this.remain - this.myText.length;
+                },
+                computedColor: function(){
+                    var color = 'green';
+                    if(this.remaining < 20){
+                        color = 'orange';
+                    }
+                    if(this.remaining < 10){
+                        color = 'red';
+                    }
+                    return color;
+                }
+            }
+        })
+    </script>
+</body>
+</html>

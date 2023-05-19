@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For Test</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <style>
+        			/* 나타나고 있을때와 사라질때는 0.5 초*/
+			.v-enter-active, .v-leave-active {
+				transition: 0.5s;
+			}
+			/* 나타나기전의 상태와 사라진 상태는 투명도가 0, 밑으로 20 이동*/
+			.v-enter, .v-leave-to {
+				opacity: 0;
+				transform: translateX(20px)
+			}
+    </style>
+</head>
+<body>
+    <div id="app">
+        <transition-group tag="ul">
+            <li v-for="(item,index) in number_list" :key="item">{{item}} <button @click="mod(item,index)">변경</button> <button @click="del(index)">삭제</button></li>
+        </transition-group>
+        <button @click="sort">소트</button> <button @click="print">구구단보이기</button>
+        <transition-group tag="ul">
+                <li v-for="item in 9" v-if="isPrint" :key="item">{{number_list[number_list.length-1]}} x {{item}} = {{number_list[number_list.length-1] * item}} </li>
+            </ul>
+        </transition-group>
+    </div>
+</body>
+<script>
+    new Vue({
+        el:'#app',
+        data:{
+            number_list :[2,3,4,5,6,7,8,9],
+            isPrint : false
+        },
+        methods:{
+            mod : function(item,index){
+                this.number_list.splice(index,1,item+1);
+            },
+            del : function(index){
+                this.number_list.splice(index,1);
+            },
+            print : function(){
+                this.isPrint = true;
+            },
+            sort : function(){
+                this.number_list.sort((a,b)=>a-b);
+                this.number_list = this.number_list.filter((item,index) => this.number_list.indexOf(item) === index); // indexOf는 최초의 인덱스만 반환하기에 중복값 만 배열에 넣기가 가능.
+            }
+        }
+    })
+</script>
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>구글차트</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+</head>
+<body>
+    <h2>구글차트로 원그래프 그리기</h2>
+    <h3>선호하는 점심메뉴 투표</h3>
+    <div id="chart_div" style="height: 500px;">
+    </div>
+    <div id="app">
+        <ul>
+            <li v-for="(item,index) in dataArr" v-if="index > 0">{{item[0]}}, {{item[1]}} <button @click="voteAdd(item[1],index)">한 표</button> <button @click="voteSub(item[1],index)">한 표빼기</button></li>
+        </ul>
+    </div>
+    <script>
+        var orgdata = [
+            ['종류','개수'],
+            ['도시락',3],
+            ['갈비탕',6],
+            ['오므라이스',5],
+            ['짬뽕',1],
+            ['비빔밥',3],
+            ['메밀소바',1]
+        ]
+
+        google.charts.load('current', {packages :['corechart']});
+        google.charts.setOnLoadCallback(drawBasic);
+
+        function drawBasic(){
+            var data = google.visualization.arrayToDataTable(orgdata);
+            var options = {title:'선호하는 점심', is3D : true};
+            var chart = new google.visualization.BarChart(
+                document.getElementById('chart_div'));
+            chart.draw(data,options);
+
+        }
+
+        new Vue({
+            el:'#app',
+            data:{
+                dataArr : orgdata
+            },
+            methods:{
+                voteAdd : function(item,index){
+                    this.dataArr[index].splice(1,1,item+1);
+                    drawBasic();
+                },
+                voteSub : function(item,index){
+                    this.dataArr[index].splice(1,1,item-1);
+                    drawBasic();
+                }
+            }
+        })
+    </script>
+</body>
+</html>

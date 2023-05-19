@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>유저조작 v-on</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    
+</head>
+<body>
+    <div id="app">
+        <button @click="sayHi">SayHi</button>
+        <br>
+        <button @click="countUp">+1</button>
+        <p>{{count}}</p>
+
+        <button :disabled="isClick" @click="oneClick">좋아~</button>
+        <input type="text" @keyUp.enter.shift="showAlert" v-model="myText">
+        <p>{{myText}}</p>
+        <input type="text" @keyUp.enter.shift="show">
+    </div>
+</body>
+<script>
+    function good(){
+        alert('좋아~');
+    }
+    var app = new Vue({
+        el: '#app',
+        data:{
+            count : 0,
+            isClick : false,
+            myText : ''
+        },
+        methods :{
+            sayHi : function(){
+                alert('hi');
+            },
+            countUp : function(){
+                this.count++;
+            },
+            oneClick : function(){
+                this.isClick = true;
+                good();
+            },
+            showAlert : function(){
+                alert('Enter');
+            },
+            show : function(){
+                alert('show!');
+            }
+        },
+    })
+</script>
+</html>

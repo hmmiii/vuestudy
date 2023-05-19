@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>8장 실습</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <h2>제한 시간내에 문자 입력하기</h2>
+        <label>금지문자 (,로 나누어 복수 입력가능) <input type="text" v-model="cannot"></label>
+        <br>
+        <label>제한시간을 입력하세요 (초) <input type="text" v-model.number="sec"><button @click="start" :disabled="!isDis">시작</button></label>
+        <p>남은시간 {{restSec}}초</p>
+        <textarea name="" id="" cols="50" rows="10" :disabled="isDis" v-model="myText"></textarea>
+        <p>{{myText.length}}개의 문자를 입력하였습니다.</p>
+        <p>벌점 : {{point}} (금지문자 1개당 12점)</p>
+    </div>
+    <script>
+        new Vue({
+            el:'#app',
+            data:{
+                sec:10,
+                restSec:0,
+                cannot:['바보','멍청이'],
+                isDis : true,
+                myText:'',
+                timer :null,
+                point:0
+            },
+            methods:{
+                start:function(){
+                    this.isDis = false;
+                    this.myText = '';
+                    this.restSec = this.sec;
+                    this.timer = setInterval(()=>{
+                        this.restSec--;
+                    },1000)
+                }
+            },
+            watch:{
+                restSec:function(){
+                    if(this.restSec == 0){
+                        alert('종료!');
+                        clearInterval(this.timer)
+                        this.isDis = true;
+                    }
+                },
+                myText:function(){
+                    var pos = -1;
+                    this.cannot.forEach((text)=>{
+                        pos = this.myText.indexOf(text);
+                        if(pos > -1){
+                            alert('금지문자'+text+' 발견!');
+                            this.myText = this.myText.substr(0,pos);
+                            this.point+=12;
+                        }
+                    });
+                },
+                cannot:function(){
+                    this.cannot = this.cannot.split(',');
+                }
+            }
+        });
+    </script>
+</body>
+</html>

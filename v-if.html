@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>v-if</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <label><input type="checkbox" v-model="visible"> 표시</label>
+        <p v-if="visible">true일때 보임</p>
+        <button v-if="isShow" @click="good">좋아~</button>
+    </div>
+</body>
+<script>
+    new Vue({
+        el:'#app',
+        data:{
+            visible:false,
+            isShow : true
+        },
+        methods:{
+            good : function(){
+                this.isShow = false;
+            }
+        }
+    })
+</script>
+</html>

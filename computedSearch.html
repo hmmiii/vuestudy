@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>컴퓨티드 서치 구현</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+</head>
+<body>
+    <h2>컴퓨티드 서치 구현</h2>
+    <div id="app">
+        <input type="text" v-model="findWord">
+        <ul>
+            <li v-for="item in findList">{{item}}</li>
+        </ul>
+    </div>
+    <script>
+        new Vue({
+            el:'#app',
+            data:{
+                findWord : '',
+                lists:['한라산','북한산','설악산','백두산','지리산']
+            },
+            computed:{
+                findList: function(){
+                    if(this.findWord){
+                        return this.lists.filter((word)=>{
+                            return word.indexOf(this.findWord) > -1;
+                        });
+                    }else{
+                        return this.lists;
+                    }
+                }
+            }
+        })
+    </script>
+</body>
+</html>

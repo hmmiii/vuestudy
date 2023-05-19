@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <h2>클릭하면 카운터가 올라 가고 내려갑니다.</h2>
+    <div id="app">
+        <p>{{count}}회</p>
+        <p v-text="myText"></p>
+        <p v-html="myText"></p>
+        <button v-on:click="countUp">카운터Up</button>
+        <button v-on:click="countDown">카운터Down</button>
+        <div>{{$data}}</div>
+        <ul>
+            <li v-for="(item, key) in myTea">{{item.name}} - {{item.price.toLocaleString()}}</li>
+        </ul>
+    </div>
+</body>
+<script>
+    var teaList = [
+        {name: '우롱차', price: 2000},
+        {name: '녹차', price: 3000},
+        {name: '홍차', price: 4000}
+    ];
+
+    new Vue({
+        el: '#app',
+        data: {
+            count: 0,
+            myText: '<h1>안녕하세요</h1>',
+            myTea : teaList
+        },
+        methods: {
+            countUp: function() {
+                this.count++;
+            },
+            countDown: function() {
+                this.count--;
+            }
+        }
+    })
+</script>
+</html>

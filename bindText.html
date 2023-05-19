@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>v-bind</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+</head>
+<style>
+    img{
+        display: block;
+        width: 300px;
+    }
+    .weight{
+        font-weight: 600;
+    }
+    .dark{
+        background-color: #333;
+    }
+</style>
+<body>
+    <div id="app">
+        <img src="face1.jpg" alt="">
+        <img :src="fileName" alt="">
+        <a :href="naver">네이버</a>
+        <p :align="align" :style="{color:style.color, fontSize:style.fontSize}" :class=[myClass,dark]>Lorem, ipsum dolor.</p>
+    </div>    
+</body>
+<script>
+    new Vue({
+        el: '#app',
+        data : {
+            fileName : 'face1.jpg',
+            naver: 'https://www.naver.com',
+            align:'center',
+            style : {
+                color: 'red',
+                fontSize: '30px',
+            },
+            myClass : 'weight',
+            dark : 'dark',
+        },
+    })
+</script>
+</html>

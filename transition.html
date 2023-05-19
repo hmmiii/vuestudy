@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>트랜지션</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
+
+</head>
+<body>
+
+    <div id="app">
+        <label >변경 <input type="checkbox"  v-model="isOK"></label>
+        <transition>
+            <p v-if="isOK">표시/비표시의 애니메이션~</p>
+        </transition>
+
+        <transition-group tag="ul" class="list">
+            <li v-for="item in dataarr" :key="item">{{item}}</li>
+        </transition-group>
+        <button @click="add">추가</button>
+        <button @click="del">삭제</button>
+        
+        
+    </div>
+    <script>
+        new Vue({
+            el: '#app',
+            data:{
+                isOK : false,
+                dataarr :['벚꽃','등나무','진달래꽃']
+            },
+            methods:{
+                add : function(){
+                    this.dataarr.push('예쁜꽃');
+                },
+                del: function(){
+                    this.dataarr.splice(-1,1);
+                }
+            }
+        })
+    </script>
+    
+        <style>
+            .v-enter-active, .v-leave-active{
+                transition: 0.5s;
+            }
+            .v-enter, .v-leave-to{
+                opacity: 0;
+                transform: translateX(20px);
+            }
+
+        </style>
+</body>
+</html>

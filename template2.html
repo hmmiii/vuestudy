@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>템플릿</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <my-component my-name="철수"></my-component>
+        <my-component my-name="영희"></my-component>
+        <my-component></my-component>
+    </div>    
+    <script>
+        var Mycomponent = {
+            template : '<p class="my-comp">나는 {{myName}}</p>',
+            data : function(){
+                return {
+                    count : 0
+                }
+            },
+            props:{
+                myName:String
+            },
+            created: function(){
+                if(this.myName == null){
+                    this.myName = '이름없음';
+                }
+            }
+        };
+        new Vue({
+            el: '#app',
+            components:{
+                'my-component': Mycomponent
+            }
+        })
+    </script>
+</body>
+</html>

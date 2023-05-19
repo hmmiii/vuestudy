@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>watch</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <h2>금지문자 감지</h2>
+        <p>주의: '안되'는 입력할 수 없습니다.</p>
+        <textarea v-model="inputText" cols="30" rows="10"></textarea>
+    </div>
+    <script>
+        new Vue({
+            el: '#app',
+            data:{
+                cannot:'안되',
+                inputText:'오늘은 날씨가 정말 좋습니다.'
+            },
+            watch:{
+                inputText:function(){
+                    var pos = this.inputText.indexOf(this.cannot);
+                    if(pos > -1){
+                        alert(this.cannot+'는 입력할 수 없습니다.');
+                        this.inputText = this.inputText.substr(0,pos);
+                    }
+                }
+            }
+        })
+    </script>
+</body>
+</html>

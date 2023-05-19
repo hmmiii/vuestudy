@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>바인드 예제</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<style>
+    .blue-underline{
+        text-decoration: underline;
+        text-decoration-color: blue;
+    }
+    .strice-through{
+        text-decoration: line-through;
+    }
+</style>
+<body>
+    <div id="app">
+        <p><a :link="naver">네이버로 연결</a></p>
+        <p><img :src="fileName" alt="face2 이미지 표시"></p>
+        <p :align="alignLeft">텍스트를 왼쪽정렬</p>
+        <p :align="alignRight">텍스트를 오른쪽정렬</p>
+        <p :align="alignCenter">텍스트를 가운데정렬</p>
+        <p :style="{color:color}">인라인 스타일로 글자색을 빨간색으로</p>
+        <p :style="{color:color, fontSize:fontSize}">인라인 스타일로 글자크기를 150% 크게 빨간색으로</p>
+        <p :style="{color:color, fontSize:fontSize, backgroundColor:backgroundColor}">인라인 스타일로 글자크기를 150% 크게 빨간색으로 배경은 노란색으로</p>
+        <p :class="blueUnderline">blue-underline class 지정</p>
+        <p :class="[blueUnderline, striceThrough]">blue-underline, strice-through class 지정</p>
+    </div>
+</body>
+<script>
+    new Vue({
+        el: '#app',
+        data :{
+            naver : 'https://www.naver.com',
+            fileName : 'face2.jpg',
+            alignLeft : 'left',
+            alignRight : 'right',
+            alignCenter : 'center',
+            color: 'red',
+            fontSize: '150%',
+            backgroundColor: 'yellow',
+            blueUnderline : 'blue-underline',
+            striceThrough : 'strice-through',
+        }
+    })
+</script>
+</html>

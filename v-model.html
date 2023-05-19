@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>v-model</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+</head>
+<body>
+    <div id="app">
+        <textarea v-model="myText" cols="30" rows="10"></textarea>
+        <p>문장은, {{ myText }} 입니다.</p>
+        <p>글자수는 {{ myText.length }} 입니다.</p>
+        <label>
+            <input type="checkbox" value="red" v-model="myCheck"> 적
+        </label> 
+        <label>
+            <input type="checkbox" value="green" v-model="myCheck"> 녹
+        </label> 
+        <label>
+            <input type="checkbox" value="blue" v-model="myCheck"> 청
+        </label> 
+        <p>선택한 색은 {{myCheck}}</p>
+        <label><input type="checkbox" v-model="agree"></label> <button :disabled="!agree">송신</button>
+        <label>
+            <input type="radio" name="radioGroup" value="red" v-model="picked"> 적
+        </label>
+        <label>
+            <input type="radio" name="radioGroup" value="green" v-model="picked"> 녹
+        </label>
+        <label>
+            <input type="radio" name="radioGroup" value="blue" v-model="picked"> 청
+        </label>
+        <p>선택한 색은 {{picked}}</p>
+        <label>
+            <input type="radio" name="imgName" value="face1.jpg" v-model="fileName"> face1
+        </label>
+        <label>
+            <input type="radio" name="imgName" value="face2.jpg" v-model="fileName"> face2
+        </label>
+        <br>
+        <img :src="fileName"  alt="선택된 이미지" style="width: 100px">
+        <br>
+        <select name="" id="" v-model="selected">
+            <option value="" disabled>선택하세요</option>
+            <option value="항목 1">항목 1</option>
+            <option value="항목 2">항목 2</option>
+            <option value="항목 3">항목 3</option>
+        </select>
+        <p>선택한 항목은 {{selected}}</p>
+        <select name="" id="" v-model="selectedColor">
+            <option value="" disabled>선택하세요</option>
+            <option value="red">적</option>
+            <option value="green">녹</option>
+            <option value="blue">청</option>
+        </select>
+        <p :style="{color:selectedColor}">선택한 색상은 {{selectedColor}}</p>
+        <input v-model.lazy="lazyText">
+        <p>다 쓰고 표시 : {{lazyText}}</p>
+        <input v-model.number="numberType">
+        <p>숫자형으로 변환 {{numberType}}</p>
+        <input v-model.trim.lazy="trimText">
+        <p>앞뒤 공백 자동 제거하고 보여주기 {{trimText}}</p>
+    </div>
+</body>
+<script>
+    new Vue({
+        el:'#app',
+        data:{
+            myName : '',
+            myText : '',
+            myCheck : [],
+            agree : false,
+            picked : '',
+            fileName : '',
+            selected : '',
+            selectedColor : '',
+            lazyText : '',
+            numberType : 0,
+            trimText : ''
+        }
+    })
+</script>
+</html>

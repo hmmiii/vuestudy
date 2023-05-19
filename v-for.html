@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>v-for</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+</head>
+<body>
+    <h1>For</h1>
+    <div id="app">
+        <ul>
+            <li v-for="(item,index) in myArr">{{index}}. {{item.name}} \{{item.price}}</li>
+        </ul>
+        <ul>
+            <li v-for="n in 10">{{n}}x5 = {{n*5}}</li>
+        </ul>
+        <table>
+            <thead>
+                <tr>
+                    <th v-for="item in header">{{item}}</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="line in ranking">
+                    <td v-for="item in line">{{item}}</td>
+                </tr>
+            </tbody>
+        </table>
+        <ul>
+            <li v-for="n in myNum">{{n}}</li>
+        </ul>
+        <button @click="filterEven">짝수만</button>
+        <ul>
+            <li v-for="item in 4">{{item}}</li>
+        </ul>
+    </div>
+</body>
+<script>
+    var header = ['프로그래밍언어',2018,2013,2008,2003,1998];
+    var ranking = [
+        ['JAVA',1,2,1,1,16],
+        ['C',2,3,1,4,5],
+        ['C++',9,2,1,1,16],
+        ['Python',3,4,3,1,2],
+        ['JS',3,2,5,4,8]
+    ];
+    new Vue({
+        el:'#app',
+        data:{
+            myArr : [
+                {name:'쨈빵', price:1000},
+                {name:'메론빵', price:1500},
+                {name:'크로와상', price:3000}
+            ],
+            header : header,
+            ranking :ranking,
+            myNum : [1,2,3,4,5,6,7,8,9,10],
+            number_list :[2,3,4,5,6,7,8,9]
+        },
+        methods:{
+            filterEven:function(){
+                this.myNum = this.myNum.filter(function(a){
+                    return a % 2 == 0;
+                })
+            }
+        }
+    })
+</script>
+</html>
