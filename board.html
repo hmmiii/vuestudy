@@ -5,15 +5,253 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>게시판</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 </head>
 <body>
+    <h2>게시판</h2>
     <div id="app">
-
+        <my-board-list @board-write="boardWrite" @board-read="boardRead" :db="boardData" v-if="listOK"></my-board-list>
+        <my-board-read :db="info" @board-list="boardList" @board-delete="boardDelete" v-if="readOK"></my-board-read>
+        <my-board-write v-if="writeOK" @board-list="boardList" @board-save="boardSave"></my-board-write>
     </div>
+
     <script>
+        var MyBoardList = {
+            props:["db"],
+            template:`
+            <div>
+                    <table class="table">
+                        <colgroup>
+                            <col style="width: 10%;">
+                            <col>
+                            <col style="width: 10%">
+                        </colgroup>
+                        <thead>
+                            <tr>
+                                <th>글번호</th>
+                                <th>글제목</th>
+                                <th>작성자</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="item in db">
+                                <td>{{item.no}}</td>
+                                <td v-on:click="boardRead(item)" style="cursor:pointer">{{item.title}}</td>
+                                <td>{{item.writer}}</td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="3"><button @click="boardWrite" type="button" class="btn btn-primary">글쓰기</button></td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>            
+            `,
+            methods:{
+                boardRead:function(info){
+                    this.$emit('board-read',info);
+                },
+                boardWrite:function(){
+                    this.$emit('board-write');
+                }
+            }
+        };
+
+        var MyBoardRead = {
+            props:["db"],
+            template:`
+            <div>
+                <table class="table">
+                    <colgroup>
+                        <col style="width: 10%;">
+                        <col>
+                        <col style="width: 10%">
+                    </colgroup>
+                    <thead>
+                        <tr>
+                            <th>글번호 : {{db.no}}</th>
+                            <th>글제목 : {{db.title}}</th>
+                            <th>작성자 : {{db.writer}}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td colspan="3">
+                                <textarea style="width: 100%">{{db.content}}</textarea>
+                            </td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td><button type="button" class="btn btn-secondary">수정</button></td>
+                            <td><button type="button" class="btn btn-danger" @click="boardDelete(db.no)">삭제</button></td>
+                            <td style="text-align: right;"><button @click="boardList" type="button" class="btn btn-success">목록</button></td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>            
+            `,
+            methods:{
+                boardList:function(){
+                    this.$emit('board-list');
+                },
+                boardDelete:function(no){
+                    this.$emit('board-delete',no);
+                }
+            }
+        };
+
+        var MyBoardWrite = {
+            data:function(){
+               return {
+                no:0,
+                title:'',
+                writer:'',
+                content:''
+               } 
+            },
+            template: `
+            <div>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th><input type="text" placeholder="글제목" style="width: 100%;" v-model="title"></th>
+                            <th><input type="text" placeholder="글쓴이" style="width: 100%;" v-model="writer"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td colspan="2">
+                                <textarea style="width:100%" placeholder="글내용" v-model="content"></textarea>
+                            </td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td><button @click="boardSave" type="button" class="btn btn-primary">등록</button></td>
+                            <td style="text-align: right;"><button type="button" @click="boardList" class="btn btn-success" >목록</button></td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>            
+            `,
+            methods:{
+                boardList : function(){
+                    this.$emit('board-list');
+                },
+                boardSave : function(){
+                    this.$emit('board-save',{no:0,title:this.title,writer:this.writer,content:this.content})
+                }
+            }
+        };
+
+        var MyBoardModify = {
+            template: `
+            <div>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th><input type="text" placeholder="글제목" style="width: 100%;" v-model="title">{{info.title}}</th>
+                            <th><input type="text" placeholder="글쓴이" style="width: 100%;" v-model="writer" disabled="true">{{info.writer}}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td colspan="2">
+                                <textarea style="width:100%" placeholder="글내용" v-model="content">{{info.content}}</textarea>
+                            </td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td><button @click="boardSave" type="button" class="btn btn-primary">수정완료</button></td>
+                            <td style="text-align: right;"><button type="button" @click="boardList" class="btn btn-success" >목록</button></td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>            
+            `,
+            methods:{
+                boardModifyDone : function(){
+                    this.$emit()
+                }
+            }
+        };
+
+
+
         new Vue({
-            el: '#app'
+            el: '#app',
+            data:{
+                boardData : [
+                    {
+                        no:0,
+                        title:'글1',
+                        content:'내용1',
+                        writer:'작성자1'
+                    },
+                    {
+                        no:1,
+                        title:'글2',
+                        content:'내용2',
+                        writer:'작성자2'
+                    },
+                    {
+                        no:2,
+                        title:'글3',
+                        content:'내용3',
+                        writer:'작성자3'
+                    },
+                ],
+                listOK:true,
+                readOK:false,
+                writeOK:false,
+                info:{}
+            },
+            methods:{
+                boardRead:function(info){
+                    this.info = info;
+                    this.readOK = true;
+                    this.listOK = false;
+                },
+                boardList:function(){
+                    this.listOK = true;
+                    this.readOK = false;
+                    this.writeOK = false;
+                },
+                boardWrite:function(){
+                    this.listOK = false;
+                    this.writeOK = true;
+                },
+                boardSave:function(info){
+                    var copy = {...info};
+                    console.log(info)
+                    copy.no = this.boardData.length != 0 ? this.boardData[this.boardData.length-1].no + 1 : 0;
+                    this.boardData.push(copy);
+                    this.writeOK = false;
+                    this.listOK = true;
+                },
+                boardDelete:function(no){
+                    var target = this.boardData.filter(function(a){
+                        return a.no == no;
+                    });
+                    var targetIndex = this.boardData.findIndex(function(a){
+                        return a.no == target.no;
+                    });
+                    this.boardData.splice(targetIndex,1);
+                    this.readOK = false;
+                    this.listOK = true;
+                    console.log(this.boardData)
+                }
+            },
+            components:{
+                'my-board-list':MyBoardList,
+                'my-board-read':MyBoardRead,
+                'my-board-write':MyBoardWrite
+            }
         })
     </script>    
 </body>
