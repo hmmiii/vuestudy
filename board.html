@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -19,7 +19,7 @@
 
     <script>
         var MyBoardList = {
-            props:["db"],
+            props:['db'],
             template:`
             <div>
                     <table class="table">
@@ -230,6 +230,7 @@
                     this.listOK = true;
                     this.readOK = false;
                     this.writeOK = false;
+                    this.modifyOK = false;
                 },
                 boardWrite:function(){
                     this.listOK = false;
