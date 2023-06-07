@@ -16,7 +16,7 @@
         <my-board-write v-if="writeOK" @board-list="boardList" @board-save="boardSave"></my-board-write>
         <my-board-modify @board-modify-done="boardModifyDone" @board-list="boardList" v-if="modifyOK" :info="info"></my-board-modify>
     </div>
-
+ 
     <script>
         var MyBoardList = {
             props:['db'],
