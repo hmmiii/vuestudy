@@ -22,12 +22,10 @@ var MyBoardList = {
                         <td>{{item.writer}}</td>
                     </tr>
                 </tbody>
-                <tfoot>
-                    <tr>
-                        <td colspan="3"><button @click="boardWrite" type="button" class="btn btn-primary">글쓰기</button></td>
-                    </tr>
-                </tfoot>
             </table>
+            <div>
+                <button @click="boardWrite" type="button" class="btn btn-primary">글쓰기</button>            
+            </div>
         </div>
     </div>            
     `,
@@ -65,14 +63,12 @@ var MyBoardRead = {
                     </td>
                 </tr>
             </tbody>
-            <tfoot>
-                <tr>
-                    <td><button type="button" class="btn btn-secondary" @click="boardModify(db.no)">수정</button></td>
-                    <td><button type="button" class="btn btn-danger" @click="boardDelete(db.no)">삭제</button></td>
-                    <td style="text-align: right;"><button type="button" @click="boardList" class="btn btn-success">목록</button></td>
-                </tr>
-            </tfoot>
         </table>
+        <div>
+            <button type="button" class="btn btn-secondary" @click="boardModify(db.no)">수정</button>
+            <button type="button" class="btn btn-danger" @click="boardDelete(db.no)">삭제</button>
+            <button type="button" @click="boardList" class="btn btn-success">목록</button>
+        </div>
     </div>            
     `,
     methods:{
@@ -113,13 +109,11 @@ var MyBoardWrite = {
                     </td>
                 </tr>
             </tbody>
-            <tfoot>
-                <tr>
-                    <td><button @click="boardSave" type="button" class="btn btn-primary">등록</button></td>
-                    <td style="text-align: right;"><button type="button" @click="boardList" class="btn btn-success" >목록</button></td>
-                </tr>
-            </tfoot>
         </table>
+        <div>
+            <button @click="boardSave" type="button" class="btn btn-primary">등록</button>
+            <button type="button" @click="boardList" class="btn btn-success">목록</button>
+        </div>
     </div>            
     `,
     methods:{
@@ -162,13 +156,11 @@ var MyBoardModify = {
                     </td>
                 </tr>
             </tbody>
-            <tfoot>
-                <tr>
-                    <td><button @click="boardModifyDone(info.no, info);" type="button" class="btn btn-primary">수정완료</button></td>
-                    <td style="text-align: right;"><button type="button" @click="boardList" class="btn btn-success" >목록</button></td>
-                </tr>
-            </tfoot>
         </table>
+        <div>
+            <button @click="boardModifyDone(info.no, info);" type="button" class="btn btn-primary">수정완료</button>
+            <button type="button" @click="boardList" class="btn btn-success" >목록</button>
+        </div>
     </div>            
     `,
     methods:{
