@@ -142,7 +142,7 @@ var MyBoardModify = {
                     <td colspan="2">
                         <button class="btn btn-primary fw-bold" @click="textBold">볼드</button>
                         <button class="btn btn-primary fst-italic" @click="textItalic">이탤릭</button>
-                        <select class="form-select d-inline w-25 align-middle" aria-label="Default select example">
+                        <select class="form-select d-inline w-25 align-middle" aria-label="Default select example" @change="fontSize">
                         <option selected>글자크기</option>
                             <option value="14px">14px</option>
                             <option value="16px">16px</option>
@@ -175,6 +175,9 @@ var MyBoardModify = {
         },
         textItalic:function(){
             this.$emit('text-italic');
+        },
+        fontSize:function(){
+            this.$emit('font-size');
         }
     }
 };
@@ -267,6 +270,13 @@ new Vue({
             var text = target.toString();
             var italicText = '<i>' + text + '</i>';
             this.info.content = this.info.content.replace(text,italicText);
+        },
+        fontSize:function(){
+            var target = document.getSelection();
+            var text = target.toString();
+            var size = document.querySelector('select').value;
+            var sizeText = '<span style="font-size:'+size+'">' + text + '</span>';
+            this.info.content = this.info.content.replace(text,sizeText);
         }
     },
     components:{

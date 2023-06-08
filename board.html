@@ -14,7 +14,15 @@
         <my-board-list @board-write="boardWrite" @board-read="boardRead" :db="boardData" v-if="listOK"></my-board-list>
         <my-board-read :db="info" @board-list="boardList" @board-delete="boardDelete" @board-modify="boardModify" v-if="readOK"></my-board-read>
         <my-board-write v-if="writeOK" @board-list="boardList" @board-save="boardSave"></my-board-write>
-        <my-board-modify @board-modify-done="boardModifyDone" @board-list="boardList" @text-bold="textBold" @text-italic="textItalic" v-if="modifyOK" :info="info"></my-board-modify>
+        <my-board-modify
+        @board-modify-done="boardModifyDone"
+        @board-list="boardList"
+        @text-bold="textBold"
+        @text-italic="textItalic"
+        @font-size="fontSize"
+        v-if="modifyOK"
+        :info="info"
+        ></my-board-modify>
     </div>
  
     <script src="./core.js"></script>    
